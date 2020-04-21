@@ -26,7 +26,7 @@ class ScoreView: UIView {
         tableview.register(ScoreCell.self, forCellReuseIdentifier: "ScoreCell")
         tableview.backgroundColor = .black
         tableview.separatorStyle = .none
-        tableview.rowHeight = 80
+        tableview.rowHeight = 90
         tableview.pin(to: self).all(pin.safeArea).marginTop(50)
     }
     
