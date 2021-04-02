@@ -9,9 +9,7 @@
 import UIKit
 import PinLayout
 
-protocol MainViewDelegate: class {
-     func startGame()
-}
+
 
 class MainView: UIView {
  //MARK: Properties
@@ -31,7 +29,6 @@ class MainView: UIView {
     let startButton: UIButton = {
         $0.setImage(UIImage(named: "start"), for: .normal)
         $0.tintColor = .blue
-     //   $0.setTitle("sdgsdgsfdg", for: .normal)
         
         
         
@@ -42,6 +39,14 @@ class MainView: UIView {
         $0.setImage(UIImage(named: "result"), for: .normal)
         $0.tintColor = .blue
         $0.setTitle("Result", for: .normal)
+        
+        return $0
+    }(UIButton())
+    
+    let settingsButton: UIButton = {
+        $0.setImage(UIImage(named: "settings"), for: .normal)
+        $0.tintColor = .blue
+        $0.setTitle("settings", for: .normal)
         
         return $0
     }(UIButton())
@@ -84,16 +89,7 @@ class MainView: UIView {
         return $0
     }(UIImageView())
     
-//    let topLayer: UIView = {
-//        $0.backgroundColor = .red
-//
-//        return $0
-//    }(UIView())
-    
-//    let bottomLayer: UIView = {
-//        $0.backgroundColor = .green
-//        return $0
-//    }(UIView())
+
     
     // MARK: Init
 
@@ -115,6 +111,7 @@ class MainView: UIView {
         bottomLayer.pin(to: mainView).horizontally().top(33%).height(67%)
         startButton.pin(to: mainView).size(CGSize(width: 150, height: buttonHeight)).vCenter().hCenter()
         resultButton.pin(to: mainView).size(CGSize(width: 150, height: buttonHeight)).below(of: startButton, aligned: .center)
+        settingsButton.pin(to: mainView).size(CGSize(width: 250, height: buttonHeight)).bottom().hCenter()
         
         topLayer.pin(to: mainView).horizontally().top().height(33%)
         gameIcon.pin(to: topLayer).size(CGSize(width: 200, height: 200)).bottomCenter()
@@ -123,6 +120,7 @@ class MainView: UIView {
         startButton.addTarget(self, action: #selector(startGame), for: .touchUpInside)
         resultButton.addTarget(self, action: #selector(getResult), for: .touchUpInside)
         exitFromResultButton.addTarget(self, action: #selector(exitFromScore), for: .touchUpInside)
+        settingsButton.addTarget(self, action: #selector(setSettings), for: .touchUpInside)
         
         
     }
@@ -130,6 +128,11 @@ class MainView: UIView {
     @objc func startGame() {
         self.delegate?.startGame()
      
+    }
+    
+    @objc func setSettings() {
+        self.delegate?.getSettings()
+
     }
     
     @objc func getResult() {
@@ -161,6 +164,7 @@ class MainView: UIView {
                             self.bottomLayer.pin.top(33%)
                             self.startButton.pin.vCenter().hCenter()
                             self.resultButton.pin.below(of: self.startButton, aligned: .center)
+                            self.settingsButton.pin.bottom()
 
             })
 
@@ -176,6 +180,7 @@ class MainView: UIView {
                             self.bottomLayer.pin.top(100%)
                             self.startButton.pin.top(120%)
                             self.resultButton.pin.below(of: self.startButton, aligned: .center)
+                            self.settingsButton.pin.bottom(-200)
 
             }) { _ in
 

@@ -16,8 +16,8 @@ class ScoreCell: UITableViewCell {
     let dateOfGame: UILabel = {
         $0.textColor = .white
         $0.font = UIFont.systemFont(ofSize: 12)
-        $0.numberOfLines = 0
-        $0.lineBreakMode = .byTruncatingMiddle
+        $0.numberOfLines = 2
+        $0.lineBreakMode = .byWordWrapping
         return $0
     }(UILabel())
     
@@ -34,7 +34,7 @@ class ScoreCell: UITableViewCell {
         $0.adjustsFontSizeToFitWidth = .init()
         $0.numberOfLines = 2
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.lineBreakMode = .byTruncatingMiddle
+        $0.lineBreakMode = .byWordWrapping
         return $0
     }(UILabel())
     
@@ -45,9 +45,8 @@ class ScoreCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     backgroundColor = .black
     selectionStyle = .none
-    dateOfGame.pin(to: self).vCenter().margin(15).size(CGSize(width: 90, height: 25))
-    descriptionLabel.pin(to: self).after(of: dateOfGame).marginLeft(25).size(CGSize(width: 150, height: 25)).vCenter()
-    totalScore.pin(to: self).after(of: descriptionLabel).marginLeft(25).size(CGSize(width: 90, height: 25)).vCenter()
+    
+    
     }
     
     required init?(coder: NSCoder) {
@@ -55,5 +54,13 @@ class ScoreCell: UITableViewCell {
     }
     
     // MARK: - Handlers
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let mv = self.contentView
+        dateOfGame.pin(to: mv).vCenter().left(25).width(100).sizeToFit(.width)
+        totalScore.pin(to: mv).right(25).vCenter().height(25).width(45)
+        descriptionLabel.pin(to: mv).horizontallyBetween(dateOfGame, and: totalScore).margin(10).vCenter().sizeToFit(.width)
+        
+    }
 }
